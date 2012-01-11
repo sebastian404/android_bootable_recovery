@@ -1080,6 +1080,9 @@ void create_fstab()
     if (has_datadata()) {
         write_fstab_root("/datadata", file);
     }
+   if (has_cust()) {
+        write_fstab_root("/cust", file);
+    }
     write_fstab_root("/system", file);
     write_fstab_root("/sdcard", file);
     write_fstab_root("/sd-ext", file);
@@ -1128,6 +1131,8 @@ void process_volumes() {
     ret |= bml_check_volume("/data");
     if (has_datadata())
         ret |= bml_check_volume("/datadata");
+    if (has_cust())
+        ret |= bml_check_volume("/cust");
     ret |= bml_check_volume("/cache");
     
     if (ret == 0) {
@@ -1194,6 +1199,11 @@ int is_path_mounted(const char* path) {
 
 int has_datadata() {
     Volume *vol = volume_for_path("/datadata");
+    return vol != NULL;
+}
+
+int has_cust() {
+    Volume *vol = volume_for_path("/cust");
     return vol != NULL;
 }
 

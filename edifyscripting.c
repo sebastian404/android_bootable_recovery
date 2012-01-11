@@ -134,7 +134,15 @@ Value* FormatFn(const char* name, State* state, int argc, Expr* argv[]) {
         free(path);
         return StringValue(strdup(""));
     }
-    
+
+    if (strcmp(path, "/system") == 0 && has_cust()) {
+        ui_print("Formatting /cust...\n", path);
+        if (0 != format_volume("/cust")) {
+            free(path);
+            return StringValue(strdup(""));
+        }
+    }
+
     if (strcmp(path, "/data") == 0 && has_datadata()) {
         ui_print("Formatting /datadata...\n", path);
         if (0 != format_volume("/datadata")) {
