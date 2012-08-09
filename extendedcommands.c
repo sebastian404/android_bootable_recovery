@@ -352,13 +352,13 @@ void show_mount_usb_storage_menu()
     int fd;
     Volume *vol = volume_for_path("/sdcard");
     if ((fd = open(BOARD_UMS_LUNFILE, O_WRONLY)) < 0) {
-        LOGE("Unable to open ums lunfile (%s)", strerror(errno));
+        LOGE("Unable to open ums lunfile (%s) - %s",BOARD_UMS_LUNFILE, strerror(errno));
         return -1;
     }
 
     if ((write(fd, vol->device, strlen(vol->device)) < 0) &&
         (!vol->device2 || (write(fd, vol->device, strlen(vol->device2)) < 0))) {
-        LOGE("Unable to write to ums lunfile (%s)", strerror(errno));
+        LOGE("Unable to write to ums lunfile (%s) - %s", BOARD_UMS_LUNFILE, strerror(errno));
         close(fd);
         return -1;
     }
@@ -379,13 +379,13 @@ void show_mount_usb_storage_menu()
     }
 
     if ((fd = open(BOARD_UMS_LUNFILE, O_WRONLY)) < 0) {
-        LOGE("Unable to open ums lunfile (%s)", strerror(errno));
+        LOGE("Unable to write to ums lunfile (%s) - %s", BOARD_UMS_LUNFILE, strerror(errno));
         return -1;
     }
 
     char ch = 0;
     if (write(fd, &ch, 1) < 0) {
-        LOGE("Unable to write to ums lunfile (%s)", strerror(errno));
+        LOGE("Unable to write to ums lunfile (%s) - %s", BOARD_UMS_LUNFILE, strerror(errno));
         close(fd);
         return -1;
     }
